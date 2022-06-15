@@ -30,6 +30,7 @@ export const computeEntityParams = ({
   allModels,
   templateHelpers,
 }: ComputeEntityParamsParam): EntityParams => {
+  let hasEnum = false;
   const imports: ImportStatementParams[] = [];
   const apiExtraModels: string[] = [];
 
@@ -111,6 +112,8 @@ export const computeEntityParams = ({
       overrides.isNullable = !isAnyRelationRequired;
     }
 
+    if (field.kind === 'enum') hasEnum = true;
+
     const [validatorDecorators, validatorImport] = getValidatorAnnotations(
       field,
       DtoType.ENTITY,
@@ -124,8 +127,12 @@ export const computeEntityParams = ({
     ];
   }, [] as ParsedField[]);
 
-  if (apiExtraModels.length)
-    imports.unshift({ from: '@nestjs/swagger', destruct: ['ApiExtraModels'] });
+  if (apiExtraModels.length || hasEnum) {
+    const destruct = [];
+    if (apiExtraModels.length) destruct.push('ApiExtraModels');
+    if (hasEnum) destruct.push('ApiProperty');
+    imports.unshift({ from: '@nestjs/swagger', destruct });
+  }
 
   const importPrismaClient = makeImportsFromPrismaClient(fields);
   if (importPrismaClient) imports.unshift(importPrismaClient);
