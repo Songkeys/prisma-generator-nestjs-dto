@@ -23,6 +23,14 @@ export const getAnnotations = ({
     arr[2],
   ]);
 
+export const getCustomAnnotations = ({
+  documentation = '',
+}: DMMF.Field | DMMF.Model): string[][] =>
+  [...documentation?.matchAll(/@(@([\w]*)[^@]*)(\n|$)/g)].map((arr) => [
+    arr[1],
+    arr[2],
+  ]);
+
 // Field properties
 // isGenerated, !meaning unknown - assuming this means that the field itself is generated, not the value
 // isId,

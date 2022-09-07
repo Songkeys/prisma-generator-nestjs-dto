@@ -21,6 +21,7 @@ export interface ParsedField {
    */
   isNullable?: boolean;
   validatorDecorators?: string[];
+  customImportDecorators?: string[];
 }
 
 export interface ExtraModel {

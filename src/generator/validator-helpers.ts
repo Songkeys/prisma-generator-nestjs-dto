@@ -24,7 +24,7 @@ export const VALIDATOR_DECORATORS = new Set(
     .concat('Equals', 'Contains', 'Length', 'Matches', 'Allow'),
 );
 
-const splitDecorator = (decorator: string) => {
+export const splitDecorator = (decorator: string) => {
   const index = decorator.search(DTO_TYPES_REGEX);
   return index === -1
     ? [decorator, '']

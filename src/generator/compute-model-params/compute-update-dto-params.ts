@@ -31,6 +31,7 @@ import type {
   ParsedField,
 } from '../types';
 import { DtoType, getValidatorAnnotations } from '../validator-helpers';
+import { getCustomImportAnnotations } from '../custom-annotation-helpers';
 
 interface ComputeUpdateDtoParamsParam {
   model: Model;
@@ -98,9 +99,21 @@ export const computeUpdateDtoParams = ({
     if (validatorDecorators.length) {
       imports.push(validatorImport);
     }
+
+    const [customDecorators, customDecoratorImports] =
+      getCustomImportAnnotations(field, DtoType.UPDATE);
+    if (customDecorators.length) {
+      imports.push(...customDecoratorImports);
+    }
+
     return [
       ...result,
-      mapDMMFToParsedField(field, overrides, validatorDecorators),
+      mapDMMFToParsedField(
+        field,
+        overrides,
+        validatorDecorators,
+        customDecorators,
+      ),
     ];
   }, [] as ParsedField[]);
 

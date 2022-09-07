@@ -19,6 +19,7 @@ import type {
 } from '../types';
 import type { TemplateHelpers } from '../template-helpers';
 import { DtoType, getValidatorAnnotations } from '../validator-helpers';
+import { getCustomImportAnnotations } from '../custom-annotation-helpers';
 
 interface ComputeEntityParamsParam {
   model: Model;
@@ -121,9 +122,21 @@ export const computeEntityParams = ({
     if (validatorDecorators.length) {
       imports.push(validatorImport);
     }
+
+    const [customDecorators, customDecoratorImports] =
+      getCustomImportAnnotations(field, DtoType.ENTITY);
+    if (customDecorators.length) {
+      imports.push(...customDecoratorImports);
+    }
+
     return [
       ...result,
-      mapDMMFToParsedField(field, overrides, validatorDecorators),
+      mapDMMFToParsedField(
+        field,
+        overrides,
+        validatorDecorators,
+        customDecorators,
+      ),
     ];
   }, [] as ParsedField[]);
 

@@ -151,8 +151,11 @@ export const makeHelpers = ({
       field.kind === 'enum',
       `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}${
         enumAsSchema ? `, enumName: '${field.type}'` : ``
-      } })\n${when(useInputTypes, [...(field.validatorDecorators ?? []), ''].join('\n'))}`,
-    )}`;
+      } })`,
+    )}\n${when(
+      useInputTypes,
+      [...(field.validatorDecorators ?? []), ''].join('\n'),
+    )}\n${[...(field.customImportDecorators ?? []), ''].join('\n')}\n`;
 
   const fieldToDtoProp = (
     field: ParsedField,

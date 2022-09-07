@@ -40,10 +40,12 @@ export const mapDMMFToParsedField = (
   field: DMMF.Field,
   overrides: Partial<DMMF.Field> = {},
   validatorDecorators: string[] = [],
+  customImportDecorators: string[] = [],
 ): ParsedField => ({
   ...field,
   ...overrides,
   validatorDecorators,
+  customImportDecorators,
 });
 
 export const getRelationScalars = (

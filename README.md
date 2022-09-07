@@ -1,15 +1,9 @@
-# Project Status: Looking for new maintainers!
+# @yundo/prisma-generator-nestjs-dto
 
-This project is looking for maintainers.
+Forked from [vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)
+for adding features like: *[class-validation decorator](#validator-annotations)*, *[custom import decorator](#custom-import-annotations)*, *enum as schema options*.
 
-We are not using this package anymore ourselves, so we can no longer validate/review/test any incoming PRs anymore and ensure correct functionality.
-
-If you are an experienced open source contributor and are interested in taking over maintenance, please open a GitHub issue and let's discuss how to proceed.
-
-
-# Prisma Generator NestJS DTO
-
-[![Release](https://badge.fury.io/js/%40vegardit%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@vegardit/prisma-generator-nestjs-dto)
+[![Release](https://badge.fury.io/js/%40yundo%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@yundo/prisma-generator-nestjs-dto)
 [![License](https://img.shields.io/github/license/vegardit/prisma-generator-nestjs-dto.svg?label=license)](#license)
 
 1. [What is it?](#what-is-it)
@@ -86,6 +80,54 @@ model Post {
 - @DtoRelationCanConnectOnCreate - adds [connect](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#connect-an-existing-record) option on a relation field in the generated `CreateDTO` - useful when you want/need to connect to an existing related instance
 - @DtoRelationCanCreateOnUpdate - adds [create](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#create-a-related-record) option on a relation field in the generated `UpdateDTO` - useful when you want to allow to create related model instances
 - @DtoRelationCanConnectOnUpdate - adds [connect](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#connect-an-existing-record) option on a relation field in the generated `UpdateDTO` - useful when you want/need to connect to an existing related instance
+
+## <a name="validator-annotations"></a>Using with `class-validator` annotations
+```prisma
+/// @Max(5)
+count Int
+```
+`@Max(5)` will be parsed and added to CreateDto, UpdateDto and Entity
+
+```prisma
+/// @Max(5)[create, update]
+count Int
+```
+`@Max(5)` will be parsed and added to CreateDto and UpdateDto only
+
+```prisma
+/// @Max(5)[create]
+/// @Max(10)[update]
+count Int
+```
+`@Max(5)` will be parsed and added to CreateDto while @Max(10) will be parsed and added to UpdateDto
+
+Supports multiline decorators
+```prisma
+/// @IsUrl({
+///   disallow_auth: false
+/// })
+url: string
+```
+
+## <a name="custom-import-annotations"></a>Using with custom import annotations
+You can import your own annotations. (supports multiline decorators)
+```prisma
+/// @CustomDecorator({}){custom-decorator}
+count Int
+```
+This will generate dto like this
+```ts
+import { CustomDecorator } from 'custom-decorator';
+
+export class CreateExcampleDto {
+  @CustomDecorator({})
+  count: number;
+}
+```
+You can also use `[create,update,entity]` option just like class-validator annotations.
+```prisma
+/// @CustomDecorator({})[create]{custom-decorator}
+```
 
 ## <a name="example"></a>Example
 
