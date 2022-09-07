@@ -110,7 +110,8 @@ url: string
 ```
 
 ## <a name="custom-import-annotations"></a>Using with custom import annotations
-You can import your own annotations. (supports multiline decorators)
+You can import your own annotations. (supports multiline decorators)    
+**Note that you must write custom import annotation first before using class validator annotations!**
 ```prisma
 /// @CustomDecorator({}){'custom-decorator'}
 count Int

@@ -151,15 +151,17 @@ export const makeHelpers = ({
       field.kind === 'enum',
       `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}${
         enumAsSchema ? `, enumName: '${field.type}'` : ``
-      } })`,
-    )}\n${when(
+      } })\n`,
+    )}${when(
       useInputTypes,
-      [...(field.validatorDecorators ?? []), ''].join('\n'),
-    )}\n${[...(field.customImportDecorators ?? []), ''].join('\n')}`.replace(
-      // remove empty lines
-      /(\n)/gm,
-      '',
-    );
+      [...(field.validatorDecorators ?? []), ''].join('\n').concat('\n'),
+    )}${[...(field.customImportDecorators ?? []), ''].join('\n').concat('\n')}`
+      .replace(
+        // remove empty lines
+        /(\n)/gm,
+        '',
+      )
+      .concat('\n');
 
   const fieldToDtoProp = (
     field: ParsedField,
