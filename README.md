@@ -112,7 +112,7 @@ url: string
 ## <a name="custom-import-annotations"></a>Using with custom import annotations
 You can import your own annotations. (supports multiline decorators)
 ```prisma
-/// @CustomDecorator({}){custom-decorator}
+/// @CustomDecorator({}){'custom-decorator'}
 count Int
 ```
 This will generate dto like this
@@ -126,7 +126,7 @@ export class CreateExcampleDto {
 ```
 You can also use `[create,update,entity]` option just like class-validator annotations.
 ```prisma
-/// @CustomDecorator({})[create]{custom-decorator}
+/// @CustomDecorator({})[create]{'custom-decorator'}
 ```
 
 ## <a name="example"></a>Example
@@ -137,22 +137,22 @@ You can also use `[create,update,entity]` option just like class-validator annot
   ```prisma
 
 generator nestjsDto {
-provider = "prisma-generator-nestjs-dto"
-output = "../src"
-outputToNestJsResourceStructure = "true"
+    provider = "prisma-generator-nestjs-dto"
+    output = "../src"
+    outputToNestJsResourceStructure = "true"
 }
 
 model Question {
-id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-/// @DtoReadOnly
-createdAt DateTime @default(now())
-/// @DtoRelationRequired
-createdBy User? @relation("CreatedQuestions", fields: [createdById], references: [id])
-createdById String? @db.Uuid
-updatedAt DateTime @updatedAt
-/// @DtoRelationRequired
-updatedBy User? @relation("UpdatedQuestions", fields: [updatedById], references: [id])
-updatedById String? @db.Uuid
+    id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    /// @DtoReadOnly
+    createdAt DateTime @default(now())
+    /// @DtoRelationRequired
+    createdBy User? @relation("CreatedQuestions", fields: [createdById], references: [id])
+    createdById String? @db.Uuid
+    updatedAt DateTime @updatedAt
+    /// @DtoRelationRequired
+    updatedBy User? @relation("UpdatedQuestions", fields: [updatedById], references: [id])
+    updatedById String? @db.Uuid
 
     /// @DtoRelationRequired
     /// @DtoRelationCanConnectOnCreate

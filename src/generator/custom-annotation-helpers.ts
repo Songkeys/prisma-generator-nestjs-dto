@@ -4,7 +4,7 @@ import { DMMF } from '@prisma/generator-helper';
 import { DtoType, splitDecorator } from './validator-helpers';
 
 export const CUSTOM_IMPORT_PATH_REGEX = new RegExp(
-  `\\{(?:(.+)\\s?,?\\s?)+}$`,
+  `\\{'(?:(.+)\\s?,?\\s?)+'}$`,
   'i',
 );
 
@@ -23,6 +23,7 @@ export const getCustomImportAnnotations = (
   const imports: Record<string, string[]> = {};
   for (const [decorator, imp] of getCustomAnnotations(field)) {
     const [annotation, importPath] = splitImportPath(decorator);
+    if (!importPath) continue;
     const [deco, types] = splitDecorator(annotation);
     if (types === '' || types.toUpperCase().includes(type)) {
       decorators.push(deco);
