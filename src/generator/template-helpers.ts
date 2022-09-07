@@ -155,7 +155,11 @@ export const makeHelpers = ({
     )}\n${when(
       useInputTypes,
       [...(field.validatorDecorators ?? []), ''].join('\n'),
-    )}\n${[...(field.customImportDecorators ?? []), ''].join('\n')}`.trim();
+    )}\n${[...(field.customImportDecorators ?? []), ''].join('\n')}`.replace(
+      // remove empty lines
+      /(\n)/gm,
+      '',
+    );
 
   const fieldToDtoProp = (
     field: ParsedField,
