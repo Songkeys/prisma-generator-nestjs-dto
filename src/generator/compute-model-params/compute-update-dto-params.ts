@@ -124,7 +124,10 @@ export const computeUpdateDtoParams = ({
     imports.unshift({ from: '@nestjs/swagger', destruct });
   }
 
-  const importPrismaClient = makeImportsFromPrismaClient(fields);
+  const importPrismaClient = makeImportsFromPrismaClient(
+    fields,
+    templateHelpers.config.prismaClientPath,
+  );
   if (importPrismaClient) imports.unshift(importPrismaClient);
 
   return {

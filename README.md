@@ -1,7 +1,7 @@
 # @yundo/prisma-generator-nestjs-dto
 
 Forked from [vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)
-for adding features like: *[class-validation decorator](#validator-annotations)*, *[custom import decorator](#custom-import-annotations)*, *enum as schema options*.
+for adding features like: *[class-validation decorator](#validator-annotations)*, *[custom import decorator](#custom-import-annotations)*, *enum as schema options*, *custom prisma client path options*.
 
 [![Release](https://badge.fury.io/js/%40yundo%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@yundo/prisma-generator-nestjs-dto)
 [![License](https://img.shields.io/github/license/vegardit/prisma-generator-nestjs-dto.svg?label=license)](#license)
@@ -22,7 +22,7 @@ These classes can also be used with the built-in [ValidationPipe](https://docs.n
 ## <a name="usage"></a>Usage?
 
 ```sh
-npm install --save-dev @vegardit/prisma-generator-nestjs-dto
+npm install --save-dev @yundo/prisma-generator-nestjs-dto
 ```
 
 ```prisma
@@ -39,6 +39,7 @@ generator nestjsDto {
   entitySuffix                    = ""
   fileNamingStyle                 = "camel"
   enumAsSchema                    = "false"
+  prismaClientPath                = "@prisma/client"
 }
 ```
 
@@ -57,6 +58,7 @@ All parameters are optional.
 - [`entitySuffix`]: (default: `""`) - phrase to suffix every `Entity` class with
 - [`fileNamingStyle`]: (default: `"camel"`) - how to name generated files. Valid choices are `"camel"`, `"pascal"`, `"kebab"` and `"snake"`.
 - [`enumAsSchema`]: (default: `"false"`) - Should enum values be reusable schemas? if `"true"`, `enumName` will be attached to `@ApiProperty` options. 
+- [`prismaClientPath`]: (default: `"@prisma/client"`) - This should be provided if you use custom `@prisma/client` path.
 
 ## <a name="annotations"></a>Annotations
 

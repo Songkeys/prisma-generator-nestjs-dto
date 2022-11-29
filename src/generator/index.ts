@@ -26,6 +26,7 @@ interface RunParam {
   entitySuffix: string;
   fileNamingStyle: NamingStyle;
   enumAsSchema: boolean;
+  prismaClientPath: string;
 }
 
 export const run = ({
@@ -38,6 +39,7 @@ export const run = ({
     outputToNestJsResourceStructure,
     fileNamingStyle = 'camel',
     enumAsSchema,
+    prismaClientPath,
     ...preAndSuffixes
   } = options;
 
@@ -53,6 +55,7 @@ export const run = ({
   const templateHelpers = makeHelpers({
     transformFileNameCase,
     transformClassNameCase: pascal,
+    prismaClientPath,
     ...preAndSuffixes,
   });
   const allModels = dmmf.datamodel.models;

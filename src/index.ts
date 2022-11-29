@@ -32,6 +32,7 @@ export const generate = (options: GeneratorOptions) => {
     entityPrefix = '',
     entitySuffix = '',
     fileNamingStyle = 'camel',
+    prismaClientPath = '@prisma/client',
   } = options.generator.config;
 
   const exportRelationModifierClasses = stringToBoolean(
@@ -82,6 +83,7 @@ export const generate = (options: GeneratorOptions) => {
     entitySuffix,
     fileNamingStyle,
     enumAsSchema,
+    prismaClientPath,
   });
 
   const indexCollections: Record<string, WriteableFileSpecs> = {};
