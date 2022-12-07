@@ -145,25 +145,27 @@ export const makeHelpers = ({
     }${when(field.isList, '[]')}`;
 
   const requiredDecorators = (
-    field: ParsedField,
-    useInputTypes = false,
-    enumAsSchema = false,
-  ) =>
-    `${when(
-      field.kind === 'enum',
-      `@ApiProperty({ enum: ${fieldType(field, useInputTypes)}${
-        enumAsSchema ? `, enumName: '${field.type}'` : ``
-      } })\n`,
-    )}${when(
-      useInputTypes,
-      [...(field.validatorDecorators ?? []), ''].join('\n').concat('\n'),
-    )}${[...(field.customImportDecorators ?? []), '']
-      .join('\n')
-      .concat('\n')}\n`.replace(
-      // remove empty lines
-      /(\n)/gm,
-      '',
-    );
+		field: ParsedField,
+		useInputTypes = false,
+		enumAsSchema = false
+	) =>
+		`${when(
+			field.kind === "enum",
+			`@ApiProperty({ enum: ${
+				fieldType(field, useInputTypes).endsWith("[]")
+					? `[${fieldType(field, useInputTypes).replace("[]", "")}]`
+					: fieldType(field, useInputTypes)
+			}${enumAsSchema ? `, enumName: '${field.type}'` : ``} })\n`
+		)}${when(
+			useInputTypes,
+			[...(field.validatorDecorators ?? []), ""].join("\n").concat("\n")
+		)}${[...(field.customImportDecorators ?? []), ""]
+			.join("\n")
+			.concat("\n")}\n`.replace(
+			// remove empty lines
+			/(\n)/gm,
+			""
+		);
 
   const fieldToDtoProp = (
     field: ParsedField,
