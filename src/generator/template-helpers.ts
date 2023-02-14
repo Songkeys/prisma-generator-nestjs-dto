@@ -153,7 +153,7 @@ export const makeHelpers = ({
       field.kind === 'enum',
       `@ApiProperty({ enum: ${
         fieldType(field, useInputTypes).endsWith('[]')
-          ? `[${fieldType(field, useInputTypes).replace('[]', '')}]`
+          ? `Object.values(${fieldType(field, useInputTypes).replace('[]', '')})`
           : fieldType(field, useInputTypes)
       }${enumAsSchema ? `, enumName: '${field.type}'` : ``} })\n`,
     )}${when(
