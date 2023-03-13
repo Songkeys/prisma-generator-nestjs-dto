@@ -1,7 +1,7 @@
 {
   "name": "@yundo/prisma-generator-nestjs-dto",
   "description": "Generates DTO and Entity classes from Prisma Schema for NestJS",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "license": "Apache-2.0",
   "author": {
     "name": "Yundo Han, (original by. Benjamin Kroeger)",
@@ -67,11 +67,14 @@
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3",
-    "ts-toolbelt": "^9.6.0"
+    "ts-toolbelt": "^9.6.0",
+    "@prisma/generator-helper": "^4.3.1",
+    "@prisma/sdk": "^4.0.0",
+    "class-validator": "*"
   },
   "peerDependencies": {
     "@prisma/generator-helper": "^4.3.1",
     "@prisma/sdk": "^4.0.0",
-    "class-validator": "^0.13.2"
+    "class-validator": "*"
   }
 }
