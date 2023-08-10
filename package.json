@@ -1,12 +1,12 @@
 {
-  "name": "@yundo/prisma-generator-nestjs-dto",
+  "name": "@songkeys/prisma-generator-nestjs-dto",
   "description": "Generates DTO and Entity classes from Prisma Schema for NestJS",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "license": "Apache-2.0",
   "author": {
-    "name": "Yundo Han, (original by. Benjamin Kroeger)",
-    "email": "han@yun.do",
-    "url": "https://github.com/ydhn"
+    "name": "Songkeys (original by. Benjamin Kroeger)",
+    "email": "songv587@gmail.com",
+    "url": "https://github.com/Songkeys"
   },
   "main": "dist/index.js",
   "keywords": [
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ydhn/prisma-generator-nestjs-dto"
+    "url": "https://github.com/songkeys/prisma-generator-nestjs-dto"
   },
   "bin": {
     "prisma-generator-nestjs-dto": "dist/cli.js"
