@@ -176,12 +176,9 @@ export const makeHelpers = ({
     useInputTypes = false,
     forceOptional = false,
   ) =>
-    `${requiredDecorators(field, useInputTypes, enumAsSchema)}${
-      field.name
-    }${unless(field.isRequired && !forceOptional, '?')}: ${fieldType(
-      field,
-      useInputTypes,
-    )};`;
+    `${requiredDecorators(field, useInputTypes, enumAsSchema)}${field.name}${
+      field.isRequired && !forceOptional ? '?' : '!'
+    }: ${fieldType(field, useInputTypes)};`;
 
   const fieldsToDtoProps = (
     fields: ParsedField[],
@@ -197,10 +194,9 @@ export const makeHelpers = ({
     )}`;
 
   const fieldToEntityProp = (field: ParsedField, enumAsSchema: boolean) =>
-    `${requiredDecorators(field, false, enumAsSchema)}${field.name}${unless(
-      field.isRequired,
-      '?',
-    )}: ${fieldType(field)} ${when(field.isNullable, ' | null')};`;
+    `${requiredDecorators(field, false, enumAsSchema)}${field.name}${
+      field.isRequired ? '?' : '!'
+    }: ${fieldType(field)} ${when(field.isNullable, ' | null')};`;
 
   const fieldsToEntityProps = (fields: ParsedField[], enumAsSchema: boolean) =>
     `${each(fields, (field) => fieldToEntityProp(field, enumAsSchema), '\n')}`;

@@ -1,9 +1,9 @@
-# @yundo/prisma-generator-nestjs-dto
+# @songkeys/prisma-generator-nestjs-dto
 
 Forked from [vegardit/prisma-generator-nestjs-dto](https://github.com/vegardit/prisma-generator-nestjs-dto)
-for adding features like: *[class-validation decorator](#validator-annotations)*, *[custom import decorator](#custom-import-annotations)*, *enum as schema options*, *custom prisma client path options*.
+for adding features like: _[class-validation decorator](#validator-annotations)_, _[custom import decorator](#custom-import-annotations)_, _enum as schema options_, _custom prisma client path options_.
 
-[![Release](https://badge.fury.io/js/%40yundo%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@yundo/prisma-generator-nestjs-dto)
+[![Release](https://badge.fury.io/js/%40songkeys%2Fprisma-generator-nestjs-dto.svg)](https://www.npmjs.com/package/@songkeys/prisma-generator-nestjs-dto)
 [![License](https://img.shields.io/github/license/vegardit/prisma-generator-nestjs-dto.svg?label=license)](#license)
 
 1. [What is it?](#what-is-it)
@@ -22,7 +22,7 @@ These classes can also be used with the built-in [ValidationPipe](https://docs.n
 ## <a name="usage"></a>Usage?
 
 ```sh
-npm install --save-dev @yundo/prisma-generator-nestjs-dto
+npm install --save-dev @songkeys/prisma-generator-nestjs-dto
 ```
 
 ```prisma
@@ -57,7 +57,7 @@ All parameters are optional.
 - [`entityPrefix`]: (default: `""`) - phrase to prefix every `Entity` class with
 - [`entitySuffix`]: (default: `""`) - phrase to suffix every `Entity` class with
 - [`fileNamingStyle`]: (default: `"camel"`) - how to name generated files. Valid choices are `"camel"`, `"pascal"`, `"kebab"` and `"snake"`.
-- [`enumAsSchema`]: (default: `"false"`) - Should enum values be reusable schemas? if `"true"`, `enumName` will be attached to `@ApiProperty` options. 
+- [`enumAsSchema`]: (default: `"false"`) - Should enum values be reusable schemas? if `"true"`, `enumName` will be attached to `@ApiProperty` options.
 - [`prismaClientPath`]: (default: `"@prisma/client"`) - This should be provided if you use custom `@prisma/client` path.
 
 ## <a name="annotations"></a>Annotations
@@ -84,16 +84,19 @@ model Post {
 - @DtoRelationCanConnectOnUpdate - adds [connect](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#connect-an-existing-record) option on a relation field in the generated `UpdateDTO` - useful when you want/need to connect to an existing related instance
 
 ## <a name="validator-annotations"></a>Using with `class-validator` annotations
+
 ```prisma
 /// @Max(5)
 count Int
 ```
+
 `@Max(5)` will be parsed and added to CreateDto, UpdateDto and Entity
 
 ```prisma
 /// @Max(5)[create, update]
 count Int
 ```
+
 `@Max(5)` will be parsed and added to CreateDto and UpdateDto only
 
 ```prisma
@@ -101,9 +104,11 @@ count Int
 /// @Max(10)[update]
 count Int
 ```
+
 `@Max(5)` will be parsed and added to CreateDto while @Max(10) will be parsed and added to UpdateDto
 
 Supports multiline decorators
+
 ```prisma
 /// @IsUrl({
 ///   disallow_auth: false
@@ -112,13 +117,17 @@ url: string
 ```
 
 ## <a name="custom-import-annotations"></a>Using with custom import annotations
-You can import your own annotations. (supports multiline decorators)    
+
+You can import your own annotations. (supports multiline decorators)
 **Note that you must write custom import annotation first before using class validator annotations!**
+
 ```prisma
 /// @CustomDecorator({}){'custom-decorator'}
 count Int
 ```
+
 This will generate dto like this
+
 ```ts
 import { CustomDecorator } from 'custom-decorator';
 
@@ -127,7 +136,9 @@ export class CreateExcampleDto {
   count: number;
 }
 ```
+
 You can also use `[create,update,entity]` option just like class-validator annotations.
+
 ```prisma
 /// @CustomDecorator({})[create]{'custom-decorator'}
 ```
@@ -137,45 +148,45 @@ You can also use `[create,update,entity]` option just like class-validator annot
 <details>
   <summary>Prisma Schema</summary>
 
-  ```prisma
+```prisma
 
 generator nestjsDto {
-    provider = "prisma-generator-nestjs-dto"
-    output = "../src"
-    outputToNestJsResourceStructure = "true"
+  provider = "prisma-generator-nestjs-dto"
+  output = "../src"
+  outputToNestJsResourceStructure = "true"
 }
 
 model Question {
-    id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    /// @DtoReadOnly
-    createdAt DateTime @default(now())
-    /// @DtoRelationRequired
-    createdBy User? @relation("CreatedQuestions", fields: [createdById], references: [id])
-    createdById String? @db.Uuid
-    updatedAt DateTime @updatedAt
-    /// @DtoRelationRequired
-    updatedBy User? @relation("UpdatedQuestions", fields: [updatedById], references: [id])
-    updatedById String? @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// @DtoReadOnly
+  createdAt DateTime @default(now())
+  /// @DtoRelationRequired
+  createdBy User? @relation("CreatedQuestions", fields: [createdById], references: [id])
+  createdById String? @db.Uuid
+  updatedAt DateTime @updatedAt
+  /// @DtoRelationRequired
+  updatedBy User? @relation("UpdatedQuestions", fields: [updatedById], references: [id])
+  updatedById String? @db.Uuid
 
-    /// @DtoRelationRequired
-    /// @DtoRelationCanConnectOnCreate
-    category   Category? @relation(fields: [categoryId], references: [id])
-    categoryId String?   @db.Uuid
+  /// @DtoRelationRequired
+  /// @DtoRelationCanConnectOnCreate
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @db.Uuid
 
-    /// @DtoCreateOptional
-    /// @DtoRelationCanCreateOnCreate
-    /// @DtoRelationCanConnectOnCreate
-    /// @DtoRelationCanCreateOnUpdate
-    /// @DtoRelationCanConnectOnUpdate
-    tags Tag[]
+  /// @DtoCreateOptional
+  /// @DtoRelationCanCreateOnCreate
+  /// @DtoRelationCanConnectOnCreate
+  /// @DtoRelationCanCreateOnUpdate
+  /// @DtoRelationCanConnectOnUpdate
+  tags Tag[]
 
-    title     String
-    content   String
-    responses Response[]
+  title     String
+  content   String
+  responses Response[]
 
 }
 
-````
+```
 
 </details>
 
@@ -187,7 +198,7 @@ model Question {
 export class ConnectQuestionDto {
   id: string;
 }
-````
+```
 
 ```ts
 // src/question/dto/create-question.dto.ts
