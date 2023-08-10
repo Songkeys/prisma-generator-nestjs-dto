@@ -1,7 +1,7 @@
 {
   "name": "@songkeys/prisma-generator-nestjs-dto",
   "description": "Generates DTO and Entity classes from Prisma Schema for NestJS",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "license": "Apache-2.0",
   "author": {
     "name": "Songkeys (original by. Benjamin Kroeger)",
@@ -27,7 +27,8 @@
     "test:watch": "jest --watch",
     "cleanup:generated": "rimraf src/@generated",
     "pregenerate": "npm run cleanup:generated",
-    "generate": "npx prisma generate && npm run format -- --loglevel error"
+    "generate": "npx prisma generate && npm run format -- --loglevel error",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
