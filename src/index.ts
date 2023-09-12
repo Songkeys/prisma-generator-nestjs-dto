@@ -1,8 +1,8 @@
-import fs from 'node:fs/promises';
+import fsp from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
-import makeDir from 'make-dir';
 import { generatorHandler } from '@prisma/generator-helper';
-import { parseEnvValue } from '@prisma/sdk';
+import { parseEnvValue } from '@prisma/internals';
 
 import { run } from './generator';
 
@@ -107,8 +107,12 @@ export const generate = (options: GeneratorOptions) => {
     results
       .concat(Object.values(indexCollections))
       .map(async ({ fileName, content }) => {
-        await makeDir(path.dirname(fileName));
-        return fs.writeFile(fileName, content);
+        // await makeDir(path.dirname(fileName));
+        const dir = path.dirname(fileName);
+        if (!fs.existsSync(dir)) {
+          await fsp.mkdir(dir, { recursive: true });
+        }
+        return fsp.writeFile(fileName, content);
       }),
   );
 };
