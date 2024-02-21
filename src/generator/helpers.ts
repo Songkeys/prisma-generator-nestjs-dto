@@ -291,14 +291,17 @@ export const mergeImportStatements = (
 export const zipImportStatementParams = (
   items: ImportStatementParams[],
 ): ImportStatementParams[] => {
-  const itemsByFrom = items.reduce((result, item) => {
-    const { from } = item;
-    const { [from]: existingItem } = result;
-    if (!existingItem) {
-      return { ...result, [from]: item };
-    }
-    return { ...result, [from]: mergeImportStatements(existingItem, item) };
-  }, {} as Record<ImportStatementParams['from'], ImportStatementParams>);
+  const itemsByFrom = items.reduce(
+    (result, item) => {
+      const { from } = item;
+      const { [from]: existingItem } = result;
+      if (!existingItem) {
+        return { ...result, [from]: item };
+      }
+      return { ...result, [from]: mergeImportStatements(existingItem, item) };
+    },
+    {} as Record<ImportStatementParams['from'], ImportStatementParams>,
+  );
 
   return Object.values(itemsByFrom);
 };

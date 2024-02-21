@@ -34,8 +34,11 @@ export const scalarToTS = (scalar: string, useInputTypes = false): string => {
 
 export const echo = (input: string) => input;
 
-export const when = (condition: any, thenTemplate: string, elseTemplate = '') =>
-  condition ? thenTemplate : elseTemplate;
+export const when = (
+  condition: any,
+  thenTemplate: string,
+  elseTemplate = '',
+) => (condition ? thenTemplate : elseTemplate);
 
 export const unless = (
   condition: any,
@@ -140,8 +143,8 @@ export const makeHelpers = ({
       field.kind === 'scalar'
         ? scalarToTS(field.type, toInputType)
         : field.kind === 'enum' || field.kind === 'relation-input'
-        ? field.type
-        : entityName(field.type)
+          ? field.type
+          : entityName(field.type)
     }${when(field.isList, '[]')}`;
 
   const requiredDecorators = (
