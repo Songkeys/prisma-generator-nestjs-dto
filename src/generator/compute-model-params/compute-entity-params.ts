@@ -55,8 +55,8 @@ export const computeEntityParams = ({
       overrides.isNullable = field.isList
         ? false
         : field.isRequired
-        ? false
-        : !isAnnotatedWith(field, DTO_RELATION_REQUIRED);
+          ? false
+          : !isAnnotatedWith(field, DTO_RELATION_REQUIRED);
 
       // don't try to import the class we're preparing params for
       if (field.type !== model.name) {
